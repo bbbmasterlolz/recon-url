@@ -7,6 +7,7 @@
     <list default="true" id="8c415387-ba50-433d-ab9e-0222f2a993b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/recon/setup/installer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/recon/setup/installer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +52,7 @@
       <recent name="C:\Work\Magang\recon\src\recon\setup" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Work\Magang\recon\tools" />
       <recent name="C:\Work\Magang\recon\src\recon" />
     </key>
   </component>

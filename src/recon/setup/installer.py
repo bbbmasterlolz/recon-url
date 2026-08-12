@@ -3,7 +3,7 @@ import importlib
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[3]
-tools_dir = root / "tool_installer"
+tools_dir = root / "tools"
 tools = [
     "subfinder",
     "katana",
