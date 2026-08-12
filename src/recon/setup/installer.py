@@ -1,17 +1,22 @@
 import shutil
 import importlib
+from pathlib import Path
+
+root = Path(__file__).resolve().parents[3]
+tools_dir = root / "tools"
+tools = [
+    "subfinder",
+    "katana",
+]
 
 
 def check_tool(name):
-    return shutil.which(name) is not None
-
+    if tools_dir:
+        return (tools_dir / f"{name}.exe").exists()
+    else:
+        return False
 
 def setup_tools():
-    tools = [
-        "subfinder",
-        "jsluice",
-    ]
-
     missing = []
 
     print("Recon Tool Setup")
@@ -30,6 +35,11 @@ def setup_tools():
 
     print("================")
     for tool in missing:
+        print(f"[INSTALLING] {tool}")
         module = importlib.import_module(f'recon.tools.{tool}')
-        module.install()
+        module.install(tools_dir / f'{tool}.exe')
+        print("done")
+
+    print("Finished")
+
 
