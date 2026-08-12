@@ -3,12 +3,11 @@ import importlib
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[3]
-tools_dir = root / "tools"
+tools_dir = root / "tool_installer"
 tools = [
     "subfinder",
     "katana",
 ]
-
 
 def check_tool(name):
     if tools_dir:
@@ -36,7 +35,7 @@ def setup_tools():
     print("================")
     for tool in missing:
         print(f"[INSTALLING] {tool}")
-        module = importlib.import_module(f'recon.tools.{tool}')
+        module = importlib.import_module(f'recon.tool_installer.{tool}')
         module.install(tools_dir / f'{tool}.exe')
         print("done")
 

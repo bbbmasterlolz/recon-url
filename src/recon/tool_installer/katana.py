@@ -1,0 +1,43 @@
+import platform
+import requests
+import zipfile
+from pathlib import Path
+
+system = platform.system()
+arch = platform.machine()
+
+
+def install(dest):
+    machine = f"{system}_{arch}".lower()
+
+    url = (f"https://github.com/projectdiscovery/katana/releases/download/v1.7.0/katana_1.7.0_{machine}.zip")
+
+    dest = Path(dest)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+
+    temp_zip = dest.parent / "temp.zip"
+
+    try:
+        # Download ZIP
+        response = requests.get(url, stream=True)
+        response.raise_for_status()
+
+        with open(temp_zip, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+
+        # open ZIP
+        with zipfile.ZipFile(temp_zip) as z:
+            exe = next(
+                name
+                for name in z.namelist()
+                if name.lower().endswith(".exe")
+            )
+
+            # Extract EXE
+            with z.open(exe) as source, open(dest, "wb") as target:
+                while chunk := source.read(8192):
+                    target.write(chunk)
+
+    finally:
+        temp_zip.unlink(missing_ok=True)

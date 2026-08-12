@@ -8,5 +8,5 @@ build/
 dist/
 *.egg-info/
 
-# External tools
+# External tool_installer
 tools/
