@@ -1,0 +1,17 @@
+[project]
+name = "recon"
+version = "0.1.0"
+description = "Reconnaissance toolkit"
+readme = "README.md"
+authors = [
+    { name = "bbbmasterlolz", email = "82566017+bbbmasterlolz@users.noreply.github.com" }
+]
+requires-python = ">=3.14"
+dependencies = []
+
+[project.scripts]
+recon = "recon.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.12.3,<0.13.0"]
+build-backend = "uv_build"
