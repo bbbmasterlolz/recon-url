@@ -13,3 +13,4 @@ dist/
 
 # External tool_installer
 tools/
+/.idea
