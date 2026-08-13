@@ -1,5 +1,7 @@
 import shutil
 import importlib
+import sys
+import subprocess
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[3]
@@ -16,29 +18,24 @@ def check_tool(name):
         return False
 
 def setup_tools():
-    missing = []
 
     print("Recon Tool Setup")
     print("================")
+
+    subprocess.run(
+        [sys.executable, "-m", "playwright", "install", "chromium"],
+        check=True,
+    )
 
     for tool in tools:
         if check_tool(tool):
             print(f"[OK]         {tool}")
         else:
-            print(f"[MISSING]    {tool}")
-            missing.append(tool)
+            print(f"[INSTALLING] {tool}")
+            module = importlib.import_module(f'recon.tool_installer.{tool}')
+            module.install(tools_dir / f'{tool}.exe')
+            print("done")
 
-    if not missing:
-        print("All Tools are already installed")
-        return
-
-    print("================")
-    for tool in missing:
-        print(f"[INSTALLING] {tool}")
-        module = importlib.import_module(f'recon.tool_installer.{tool}')
-        module.install(tools_dir / f'{tool}.exe')
-        print("done")
-
-    print("Finished")
+    print("\nFinished")
 
 

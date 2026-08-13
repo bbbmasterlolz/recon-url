@@ -39,5 +39,8 @@ def install(dest):
                 while chunk := source.read(8192):
                     target.write(chunk)
 
+    except Exception as e:
+        print(f"Installation failed: {e}")
+
     finally:
         temp_zip.unlink(missing_ok=True)

@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c415387-ba50-433d-ab9e-0222f2a993b0" name="Changes" comment="" />
+    <list default="true" id="8c415387-ba50-433d-ab9e-0222f2a993b0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/analyse/Regex.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/analyse/analyse_JS.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/analyse/s.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/analyse/target.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/analyse/tree-sitter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/analyse/tree.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/get_JS/getter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/recon/setup/installer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/recon/setup/installer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/recon/tool_installer/katana.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/recon/tool_installer/katana.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/recon/tool_installer/subfinder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/recon/tool_installer/subfinder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv.lock" beforeDir="false" afterPath="$PROJECT_DIR$/uv.lock" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,29 +34,34 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="3HnUuEaZxqoQJa7C1ZMmvZoT5gm" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.installer.executor": "Run",
-    "Python.subfinder.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Work/Magang/recon/src/recon/tools"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.Regex.executor&quot;: &quot;Run&quot;,
+    &quot;Python.getter.executor&quot;: &quot;Run&quot;,
+    &quot;Python.installer.executor&quot;: &quot;Run&quot;,
+    &quot;Python.subfinder.executor&quot;: &quot;Run&quot;,
+    &quot;Python.tree-sitter.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Work/Magang/recon/src/recon/tool_installer&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Work\Magang\recon\src\recon\tool_installer" />
       <recent name="C:\Work\Magang\recon\src\recon\tools" />
       <recent name="C:\Work\Magang\recon\src\recon\setup\tools" />
       <recent name="C:\Work\Magang\recon\src\recon\setup" />
@@ -52,7 +71,29 @@
       <recent name="C:\Work\Magang\recon\src\recon" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.getter">
+    <configuration name="getter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="recon" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/get_JS" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/get_JS/getter.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="subfinder" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="recon" />
       <option name="ENV_FILES" value="" />
@@ -77,6 +118,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.getter" />
         <item itemvalue="Python.subfinder" />
       </list>
     </recent_temporary>
