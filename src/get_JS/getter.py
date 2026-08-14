@@ -1,3 +1,4 @@
+import argparse
 import asyncio
 from playwright.async_api import async_playwright
 from analyse.analyse_JS import analyze_js
@@ -10,19 +11,21 @@ async def find_js(url: str, max_seconds: int = 60):
         page = await browser.new_page()
 
         def handle_response(response):
-            if response.request.resource_type in ("script", "xhr", "fetch"):
+            if response.request.resource_type == "script":
                 js_urls.add(response.url)
 
         page.on("response", handle_response)
 
-        await page.goto(
-            url,
-            wait_until="domcontentloaded",
-            timeout=30_000,
-        )
+        try:
+            await page.goto(
+                url,
+                wait_until="domcontentloaded",
+                timeout=30_000,
+            )
+        except Exception as e:
+            print(f"[!] Failed to load page: {e}")
 
         try:
-            # Wait until network becomes idle or 60s
             await asyncio.wait_for(
                 page.wait_for_load_state(
                     "networkidle",
@@ -30,22 +33,20 @@ async def find_js(url: str, max_seconds: int = 60):
                 ),
                 timeout=max_seconds,
             )
-
-        except (asyncio.TimeoutError, Exception):
-            pass
+        except asyncio.TimeoutError:
+            print(f"[!] Network idle timeout after {max_seconds}s")
+        except Exception as e:
+            print(f"[!] Error waiting for network idle: {e}")
 
         await browser.close()
 
     return sorted(js_urls)
 
 
-async def main():
+async def main(url: str):
     print("scanning, this can take up to 60s")
 
-    urls = await find_js(
-        "https://bibit-eshop-vuln-lab-86467527415.us-central1.run.app/",
-        max_seconds=60,
-    )
+    urls = await find_js(url, max_seconds=60)
 
     for js_url in urls:
         print(f"\n[*] Analyzing: {js_url}")
@@ -58,6 +59,18 @@ async def main():
 
         except Exception as e:
             print(f"[!] Error: {type(e).__name__}: {e}")
-            continue
 
-asyncio.run(main())
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Find and analyze JavaScript URLs"
+    )
+
+    parser.add_argument(
+        "url",
+        help="Target URL",
+    )
+
+    args = parser.parse_args()
+
+    asyncio.run(main(args.url))

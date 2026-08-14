@@ -25,17 +25,6 @@ def parse_js(path):
 
     return tree, source
 
-def extract_strings(node, source):
-    strings = []
-
-    if node.type in ("string", "template_string"):
-        strings.append(node)
-
-    for child in node.named_children:
-        strings.extend(extract_strings(child, source))
-
-    return strings
-
 def is_valid_endpoint(value):
     if not value:
         return False
@@ -57,47 +46,6 @@ def strip_quotes(value):
             return value[1:-1]
 
     return value
-
-def get_parent_type(node):
-    parent = node.parent
-
-    if parent is None:
-        return "direct"
-
-    return str(parent.type)
-
-def get_all_usage(node_o, source):
-    cursor = node_o.parent.walk()
-
-
-    def visit(cursor):
-        node = cursor.node
-
-        if node == node_o:
-            return
-
-        if node.type == "identifier":
-            print(text(node.parent, source))
-
-        if cursor.goto_first_child():
-            while True:
-                visit(cursor)
-
-                if not cursor.goto_next_sibling():
-                    break
-
-            cursor.goto_parent()
-
-    visit(cursor)
-
-def processed_str(strings):
-    valid = []
-
-    for string in strings:
-        if is_valid_endpoint(string):
-            valid.append(string)
-
-    return sorted(set(valid))
 
 def print_tree(node, source, indent=0):
     print(
