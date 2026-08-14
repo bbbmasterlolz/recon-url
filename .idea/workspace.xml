@@ -5,19 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c415387-ba50-433d-ab9e-0222f2a993b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/analyse/Regex.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/analyse/analyse_JS.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/analyse/s.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/analyse/target.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/analyse/tree-sitter.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/analyse/tree.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/get_JS/getter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/recon/setup/installer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/recon/setup/installer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/recon/tool_installer/katana.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/recon/tool_installer/katana.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/recon/tool_installer/subfinder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/recon/tool_installer/subfinder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uv.lock" beforeDir="false" afterPath="$PROJECT_DIR$/uv.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/analyse/analyse_JS.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/analyse/analyse_JS.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/analyse/tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/analyse/tree.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/get_JS/getter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_JS/getter.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

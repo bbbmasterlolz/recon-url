@@ -43,16 +43,21 @@ async def main():
     print("scanning, this can take up to 60s")
 
     urls = await find_js(
-        "https://ketelo-tegalrejo.web.app/",
+        "https://bibit-eshop-vuln-lab-86467527415.us-central1.run.app/",
         max_seconds=60,
     )
 
     for js_url in urls:
         print(f"\n[*] Analyzing: {js_url}")
 
-        results = analyze_js(js_url)
+        try:
+            results = analyze_js(js_url)
 
-        for result in results:
-            print(result)
+            for result in results:
+                print(result)
+
+        except Exception as e:
+            print(f"[!] Error: {type(e).__name__}: {e}")
+            continue
 
 asyncio.run(main())

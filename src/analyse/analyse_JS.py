@@ -1,29 +1,41 @@
 import subprocess
+import sys
+import tempfile
 from pathlib import Path
+
 import requests
 
-JSLUICE = Path(__file__).resolve().parents[2] / "tools_p" / "jsluice.exe"
+
+TREE = Path(__file__).resolve().parent / "tree.py"
 
 
 def analyze_js(link: str):
-    # Download the JavaScript
     response = requests.get(link, timeout=30)
     response.raise_for_status()
 
-    js_content = response.text
-
-    # Send the downloaded JavaScript directly to jsluice
-    result = subprocess.run(
-        [str(JSLUICE), "urls", "-"],
-        input=js_content,
-        text=True,
+    with tempfile.NamedTemporaryFile(
+        mode="w",
+        suffix=".js",
         encoding="utf-8",
-        capture_output=True,
-    )
+        delete=False,
+    ) as file:
+        file.write(response.text)
+        js_file = Path(file.name)
 
-    if result.returncode != 0:
-        print("jsluice error:")
-        print(result.stderr)
-        return []
+    try:
+        result = subprocess.run(
+            [sys.executable, str(TREE), str(js_file)],
+            text=True,
+            encoding="utf-8",
+            capture_output=True,
+        )
 
-    return result.stdout.splitlines()
+        if result.returncode != 0:
+            print(f"[!] tree.py error:")
+            print(result.stderr)
+            return []
+
+        return result.stdout.splitlines()
+
+    finally:
+        js_file.unlink(missing_ok=True)
