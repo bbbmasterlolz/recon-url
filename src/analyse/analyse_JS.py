@@ -1,12 +1,11 @@
-import subprocess
-import sys
 import tempfile
 from pathlib import Path
 
 import requests
 
-
-TREE = Path(__file__).resolve().parent / "tree.py"
+# Import tree module directly — avoids subprocess startup overhead
+from analyse import tree
+from analyse import Tester
 
 
 def analyze_js(link: str):
@@ -23,19 +22,15 @@ def analyze_js(link: str):
         js_file = Path(file.name)
 
     try:
-        result = subprocess.run(
-            [sys.executable, str(TREE), str(js_file)],
-            text=True,
-            encoding="utf-8",
-            capture_output=True,
-        )
+        results, _const, _strings = tree.parse_and_extract(str(js_file))
 
-        if result.returncode != 0:
-            print(f"[!] tree.py error:")
-            print(result.stderr)
-            return []
+        # Test URLs and return results with status/allowed info
+        tested = Tester.test_urls(sorted(results))
+        return sorted(tested)
 
-        return result.stdout.splitlines()
+    except Exception as e:
+        print(f"[!] tree analysis error: {e}")
+        return []
 
     finally:
         js_file.unlink(missing_ok=True)
