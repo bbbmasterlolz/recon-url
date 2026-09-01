@@ -3,10 +3,8 @@ from pathlib import Path
 
 from tree_sitter import Language, Parser
 import tree_sitter_javascript
-try:
-    from analyse import Tester
-except ImportError:
-    import Tester
+
+from analyse import Tester
 
 # Tree-sitter setup
 JS_LANGUAGE = Language(tree_sitter_javascript.language())
