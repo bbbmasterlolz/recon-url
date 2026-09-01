@@ -1,3 +1,3 @@
 install uv
 
-in uv perlu request
+uv run recon setup

@@ -8,7 +8,6 @@ root = Path(__file__).resolve().parents[3]
 tools_dir = root / "tools"
 tools = [
     "subfinder",
-    "katana",
 ]
 
 def check_tool(name):

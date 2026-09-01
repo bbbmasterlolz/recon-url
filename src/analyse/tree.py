@@ -3,6 +3,7 @@ from pathlib import Path
 
 from tree_sitter import Language, Parser
 import tree_sitter_javascript
+import Tester
 
 # Tree-sitter setup
 JS_LANGUAGE = Language(tree_sitter_javascript.language())
@@ -272,10 +273,12 @@ def main():
             if is_valid_endpoint(candidate):
                 results.add(candidate)
 
-    for url in sorted(results):
-        print(url)
+    tested = Tester.test_urls(sorted(results))
 
-    print("url found: ", len(results))
+    for url in tested:
+         print(url)
+
+    print("url found: ", len(tested))
 
 
 if __name__ == "__main__":
