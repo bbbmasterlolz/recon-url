@@ -3,7 +3,7 @@ import heapq
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-tested = set()
+tested = []
 valid_base = set()
 heap = []
 
@@ -19,11 +19,7 @@ def _test_one(url):
     if "://" in url:
         try:
             response = _session.options(url, timeout=REQUEST_TIMEOUT)
-            return (
-                f"{url}\n"
-                f"status  : {response.status_code}\n"
-                f"allowed : {response.headers.get('Allow')}\n"
-            )
+            return response
         except requests.RequestException:
             return f"{url}\nError\n"
 
@@ -56,7 +52,7 @@ def test_urls(urls):
 
             result = future.result()
             if result:
-                tested.add(result)
+                tested.append(result)
 
     return tested
 
@@ -68,11 +64,7 @@ def resolve_base(url):
         try:
             response = _session.options(target, timeout=REQUEST_TIMEOUT)
             if response.status_code != 404:
-                return (
-                    f"{target}\n"
-                    f"status  : {response.status_code}\n"
-                    f"allowed : {response.headers.get('Allow')}\n"
-                )
+                return response
         except requests.RequestException:
             continue
 
@@ -84,10 +76,6 @@ def resolve_base(url):
             response = _session.options(target, timeout=REQUEST_TIMEOUT)
             if response.status_code != 404:
                 valid_base.add(base_url)
-                return (
-                    f"{target}\n"
-                    f"status  : {response.status_code}\n"
-                    f"allowed : {response.headers.get('Allow')}\n"
-                )
+                return response
         except requests.RequestException:
             continue

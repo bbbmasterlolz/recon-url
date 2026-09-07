@@ -26,7 +26,7 @@ def analyze_js(link: str):
 
         # Test URLs and return results with status/allowed info
         tested = Tester.test_urls(sorted(results))
-        return sorted(tested)
+        return tested
 
     except Exception as e:
         print(f"[!] tree analysis error: {e}")

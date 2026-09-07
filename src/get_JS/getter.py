@@ -55,7 +55,13 @@ async def main(url: str):
             results = analyze_js(js_url)
 
             for result in results:
-                print(result)
+                if hasattr(result, 'status_code'):
+                    print(f"{result.url}")
+                    print(f"status  : {result.status_code}")
+                    print(f"allowed : {result.headers.get('Allow')}")
+                else:
+                    print(result)
+                print("")
 
         except Exception as e:
             print(f"[!] Error: {type(e).__name__}: {e}")

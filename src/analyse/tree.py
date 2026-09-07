@@ -215,44 +215,50 @@ def parse_and_extract(path):
     return results, const, strings
 
 
-def main():
-
-    if len(sys.argv) >= 2:
-        path = sys.argv[1]
-    else:
-        print(
-            "Usage: python tree.py <file.js>",
-            file=sys.stderr,
-        )
-        sys.exit(1)
-
-    tree, source_text = parse_js(path)
-
-    const, strings = vessel(tree.root_node, source_text)
-
-    # ── Collect results ──
-    results = set()
-
-    for string in strings:
-        # Direct full URLs
-        if is_valid_endpoint(string):
-            results.add(string)
-
-        # Path-like strings → prefix with {base_url}
-        elif _is_path(string):
-            candidate = "{base_url}" + string
-            if is_valid_endpoint(candidate):
-                results.add(candidate)
-
-    print("String extraction DONE")
-
-    tested = Tester.test_urls(sorted(results))
-
-    for url in tested:
-         print(url)
-
-    print("url found: ", len(tested))
-
-
-if __name__ == "__main__":
-    main()
+# def main():
+#
+#     if len(sys.argv) >= 2:
+#         path = sys.argv[1]
+#     else:
+#         print(
+#             "Usage: python tree.py <file.js>",
+#             file=sys.stderr,
+#         )
+#         sys.exit(1)
+#
+#     tree, source_text = parse_js(path)
+#
+#     const, strings = vessel(tree.root_node, source_text)
+#
+#     # ── Collect results ──
+#     results = set()
+#
+#     for string in strings:
+#         # Direct full URLs
+#         if is_valid_endpoint(string):
+#             results.add(string)
+#
+#         # Path-like strings → prefix with {base_url}
+#         elif _is_path(string):
+#             candidate = "{base_url}" + string
+#             if is_valid_endpoint(candidate):
+#                 results.add(candidate)
+#
+#     print("String extraction DONE")
+#
+#     tested = Tester.test_urls(sorted(results))
+#
+#     for item in tested:
+#         if hasattr(item, 'status_code'):
+#             print(f"{item.url}")
+#             print(f"status  : {item.status_code}")
+#             print(f"allowed : {item.headers.get('Allow')}")
+#         else:
+#             print(item)
+#         print("\n")
+#
+#     print("url found: ", len(tested))
+#
+#
+# if __name__ == "__main__":
+#     main()
