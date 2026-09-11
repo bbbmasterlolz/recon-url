@@ -8,7 +8,7 @@ from analyse import tree
 from analyse import Tester
 
 
-def analyze_js(link: str):
+def analyze_js(link: str, aggressive:bool):
     response = requests.get(link, timeout=30)
     response.raise_for_status()
 
@@ -25,7 +25,7 @@ def analyze_js(link: str):
         results, _const, _strings = tree.parse_and_extract(str(js_file))
 
         # Test URLs and return results with status/allowed info
-        tested = Tester.test_urls(sorted(results))
+        tested = Tester.test_urls(sorted(results), aggressive)
         return tested
 
     except Exception as e:
