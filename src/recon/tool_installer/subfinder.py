@@ -8,11 +8,11 @@ arch = platform.machine()
 
 
 def install(dest):
-    if system == "Darwin":
-        machine = f"macOS_{arch}".lower()
-    else:
-        machine = f"{system}_{arch}".lower()
+    if machine != "windows":
+        print("Install for windows only, failing to install subfinder will only prevent the usage of -d flag")
+        return
 
+    machine = f"{system}_{arch}".lower()
     url = (f"https://github.com/projectdiscovery/subfinder/releases/download/v2.15.0/subfinder_2.15.0_{machine}.zip")
 
     dest = Path(dest)
