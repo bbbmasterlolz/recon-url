@@ -15,3 +15,4 @@ dist/
 tools/
 /.idea
 .idea/workspace.xml
+/output/
