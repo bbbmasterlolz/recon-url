@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8c415387-ba50-433d-ab9e-0222f2a993b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/analyse/Tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/analyse/Tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/analyse/analyse_JS.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/analyse/analyse_JS.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_JS/getter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_JS/getter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +60,7 @@
       <recent name="C:\Work\Magang\recon\src\recon\setup" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Work\Magang\recon\srcV2" />
       <recent name="C:\Work\Magang\recon\tools" />
       <recent name="C:\Work\Magang\recon\src\recon" />
     </key>

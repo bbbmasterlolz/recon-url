@@ -6,36 +6,50 @@ from reportlab.platypus import (
     Paragraph,
     Spacer,
     Table,
-    TableStyle
+    TableStyle,
 )
 from reportlab.lib.units import cm
 
-styles = getSampleStyleSheet()
+_styles = getSampleStyleSheet()
 
 
-def make_pdf(results, js_url):
+def print_results(all_results: list[list]):
+    """Print test results to the console."""
+    for result_group in all_results:
+        for response in result_group:
+            if hasattr(response, "status_code"):
+                print(f"{response.url}")
+                print(f"status  : {response.status_code}")
+                print(f"allowed : {response.headers.get('Allow')}")
+            else:
+                print(response)
+            print("")
+
+
+def make_pdf(all_results: list[list], js_urls: list[str]):
+    """Generate a PDF report from test results."""
     pdf = SimpleDocTemplate(
         "output.pdf",
         pagesize=A4,
         leftMargin=2 * cm,
-        rightMargin=2 * cm
+        rightMargin=2 * cm,
     )
 
     content = []
 
     # Main title
     content.append(
-        Paragraph("API Report", styles["Title"])
+        Paragraph("API Report", _styles["Title"])
     )
 
-    # One table per result
-    for result, js in zip(results, js_url):
+    # One table per JS file's results
+    for result, js in zip(all_results, js_urls):
 
-        # Text before each table
+        # Section heading
         content.append(
             Paragraph(
                 f"API From {js}",
-                styles["Heading2"]
+                _styles["Heading2"],
             )
         )
         content.append(Spacer(1, 10))
@@ -49,13 +63,13 @@ def make_pdf(results, js_url):
                 data.append([
                     response.status_code,
                     response.headers.get("Allow"),
-                    Paragraph(response.url, styles["BodyText"])
+                    Paragraph(response.url, _styles["BodyText"]),
                 ])
             else:
                 data.append([
                     "-",
                     "-",
-                    Paragraph(response, styles["BodyText"])
+                    Paragraph(response, _styles["BodyText"]),
                 ])
 
         table = Table(
@@ -63,8 +77,9 @@ def make_pdf(results, js_url):
             colWidths=[
                 1.5 * cm,   # Status
                 5 * cm,     # Methode
-                10.5 * cm   # URL
-            ])
+                10.5 * cm,  # URL
+            ],
+        )
 
         table_style = [
             # Header

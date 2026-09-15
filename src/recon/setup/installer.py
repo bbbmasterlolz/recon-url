@@ -36,5 +36,3 @@ def setup_tools():
             print("done")
 
     print("\nFinished")
-
-

@@ -1,32 +1,31 @@
-import sys
 from pathlib import Path
 
 from tree_sitter import Language, Parser
 import tree_sitter_javascript
 
-from analyse import Tester
-
-# Tree-sitter setup
+# ── Tree-sitter setup ──
 JS_LANGUAGE = Language(tree_sitter_javascript.language())
-parser = Parser(JS_LANGUAGE)
+_parser = Parser(JS_LANGUAGE)
 
-def text(node, source_text):
+
+def _text(node, source_text):
     """Extract node text from pre-decoded source string."""
     return source_text[node.start_byte:node.end_byte]
 
-def parse_js(path):
 
+def _parse_js(path):
     path = Path(path)
 
     with path.open("rb") as f:
         source_bytes = f.read()
 
-    tree = parser.parse(source_bytes)
+    tree = _parser.parse(source_bytes)
     source_text = source_bytes.decode("utf-8", errors="replace")
 
     return tree, source_text
 
-def is_valid_endpoint(value):
+
+def _is_valid_endpoint(value):
     if not value:
         return False
 
@@ -39,7 +38,8 @@ def is_valid_endpoint(value):
 
     return True
 
-def vessel(root, source_text):
+
+def _vessel(root, source_text):
     PLACEHOLDER = "{?}"
 
     const = {}
@@ -53,7 +53,7 @@ def vessel(root, source_text):
 
         # ── String literal  "hello"  'hello' ──
         if ntype == "string":
-            value = text(node, source_text).strip("\"'`")
+            value = _text(node, source_text).strip("\"'`")
             strings.add(value)
             return value
 
@@ -63,7 +63,7 @@ def vessel(root, source_text):
 
             for child in node.named_children:
                 if child.type in ("template_chars", "string_fragment"):
-                    parts.append(text(child, source_text))
+                    parts.append(_text(child, source_text))
 
                 elif child.type == "template_substitution":
                     expressions = child.named_children
@@ -76,7 +76,7 @@ def vessel(root, source_text):
 
         # ── Identifier ──
         if ntype == "identifier":
-            name = text(node, source_text)
+            name = _text(node, source_text)
 
             # Circular reference guard
             if name in seen:
@@ -123,14 +123,14 @@ def vessel(root, source_text):
     def _member_key(node):
         """Build a dotted key from a member_expression, e.g. O.baseUrl."""
         if node.type == "identifier":
-            return text(node, source_text)
+            return _text(node, source_text)
         if node.type == "member_expression":
             obj = node.child_by_field_name("object")
             prop = node.child_by_field_name("property")
             if obj and prop:
                 obj_key = _member_key(obj)
                 if obj_key:
-                    return obj_key + "." + text(prop, source_text)
+                    return obj_key + "." + _text(prop, source_text)
         return None
 
     def _extract_object_props(obj_node, prefix):
@@ -140,7 +140,7 @@ def vessel(root, source_text):
                 key_node = child.child_by_field_name("key")
                 value_node = child.child_by_field_name("value")
                 if key_node and value_node:
-                    key = text(key_node, source_text)
+                    key = _text(key_node, source_text)
                     full_key = prefix + "." + key
 
                     if value_node.type == "object":
@@ -159,7 +159,7 @@ def vessel(root, source_text):
             value_node = node.child_by_field_name("value")
 
             if name_node and value_node:
-                name = text(name_node, source_text)
+                name = _text(name_node, source_text)
 
                 # Object literal → extract properties with dotted keys
                 if value_node.type == "object":
@@ -195,70 +195,21 @@ def _is_path(value):
     return True
 
 
-def parse_and_extract(path):
-    """Parse a JS file and return (results set, const dict, strings set).
-    
-    Importable entry point — avoids subprocess overhead.
+def extract_endpoints(path) -> set[str]:
+    """Parse a JS file and return a set of discovered endpoint URLs.
+
+    This is the main entry point for the parser module.
     """
-    tree, source_text = parse_js(path)
-    const, strings = vessel(tree.root_node, source_text)
+    tree, source_text = _parse_js(path)
+    const, strings = _vessel(tree.root_node, source_text)
 
     results = set()
     for string in strings:
-        if is_valid_endpoint(string):
+        if _is_valid_endpoint(string):
             results.add(string)
         elif _is_path(string):
             candidate = "{base_url}" + string
-            if is_valid_endpoint(candidate):
+            if _is_valid_endpoint(candidate):
                 results.add(candidate)
 
-    return results, const, strings
-
-
-# def main():
-#
-#     if len(sys.argv) >= 2:
-#         path = sys.argv[1]
-#     else:
-#         print(
-#             "Usage: python tree.py <file.js>",
-#             file=sys.stderr,
-#         )
-#         sys.exit(1)
-#
-#     tree, source_text = parse_js(path)
-#
-#     const, strings = vessel(tree.root_node, source_text)
-#
-#     # ── Collect results ──
-#     results = set()
-#
-#     for string in strings:
-#         # Direct full URLs
-#         if is_valid_endpoint(string):
-#             results.add(string)
-#
-#         # Path-like strings → prefix with {base_url}
-#         elif _is_path(string):
-#             candidate = "{base_url}" + string
-#             if is_valid_endpoint(candidate):
-#                 results.add(candidate)
-#
-#     print("String extraction DONE")
-#
-#     tested = Tester.test_urls(sorted(results))
-#
-#     for item in tested:
-#         if hasattr(item, 'status_code'):
-#             print(f"{item.url}")
-#             print(f"status  : {item.status_code}")
-#             print(f"allowed : {item.headers.get('Allow')}")
-#         else:
-#             print(item)
-#         print("\n")
-#
-#     print("url found: ", len(tested))
-#
-#
-# if __name__ == "__main__":
-#     main()
+    return results
