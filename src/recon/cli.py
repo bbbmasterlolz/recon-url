@@ -62,6 +62,9 @@ def main():
         setup_tools()
 
     elif args.command == "scan":
+        if not args.url.startswith("http"):
+            args.url = f"https://{args.url}"
+            
         if args.domain:
             # Strip protocol to get bare domain for subfinder
             domain = args.url.replace("https://", "").replace("http://", "").split("/", 1)[0]
