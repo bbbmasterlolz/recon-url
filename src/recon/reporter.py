@@ -1,3 +1,4 @@
+from pathlib import Path
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet
@@ -30,9 +31,11 @@ def print_results(all_results: list[list]):
 def make_pdf(all_results: list[list], js_urls: list[str], main_url: str):
     """Generate a PDF report from test results."""
     date = datetime.now().strftime("%Y-%m-%d")
-    file_name = f"{main_url.replace('https://','').replace('http://','').split('/', 1)[0]}_{date}.pdf"
+    output_dir = Path("output")
+    output_dir.mkdir(exist_ok=True)
+    file_name = output_dir / f"{main_url.replace('https://','').replace('http://','').split('/', 1)[0]}_{date}.pdf"
     pdf = SimpleDocTemplate(
-        file_name,
+        str(file_name),
         pagesize=A4,
         leftMargin=2 * cm,
         rightMargin=2 * cm,
