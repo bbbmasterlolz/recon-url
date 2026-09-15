@@ -8,7 +8,7 @@ arch = platform.machine()
 
 
 def install(dest):
-    if machine != "windows":
+    if system != "windows":
         print("Install for windows only, failing to install subfinder will only prevent the usage of -d flag")
         return
 
