@@ -2,7 +2,7 @@ import argparse
 import asyncio
 
 from recon.setup.installer import setup_tools
-from recon.main import run
+from recon.main import run, run_domain
 
 
 def main():
@@ -42,13 +42,19 @@ def main():
         help="Save output to PDF",
     )
 
+    scan_parser.add_argument(
+        "-d", "--domain",
+        action="store_true",
+        help="Treat the URL as a domain — use subfinder to enumerate subdomains and scan each one",
+    )
+
     # ── Handle bare URL usage:  reconAPI https://example.com ──
     # If the first arg looks like a URL, treat it as "scan <url>"
     args, remaining = parser.parse_known_args()
 
     if args.command is None and remaining:
         first = remaining[0]
-        if first.startswith(("http://", "https://")):
+        if first.startswith(("http://", "https://")) or remaining and any(f in remaining for f in ["-d", "--domain"]):
             # Re-parse as: scan <url> [remaining flags]
             args = parser.parse_args(["scan"] + remaining)
 
@@ -56,7 +62,12 @@ def main():
         setup_tools()
 
     elif args.command == "scan":
-        asyncio.run(run(args.url, args.aggressive, args.output))
+        if args.domain:
+            # Strip protocol to get bare domain for subfinder
+            domain = args.url.replace("https://", "").replace("http://", "").split("/", 1)[0]
+            asyncio.run(run_domain(domain, args.aggressive, args.output))
+        else:
+            asyncio.run(run(args.url, args.aggressive, args.output))
 
     else:
         parser.print_help()

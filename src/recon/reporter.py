@@ -9,6 +9,7 @@ from reportlab.platypus import (
     TableStyle,
 )
 from reportlab.lib.units import cm
+from datetime import datetime
 
 _styles = getSampleStyleSheet()
 
@@ -26,10 +27,12 @@ def print_results(all_results: list[list]):
             print("")
 
 
-def make_pdf(all_results: list[list], js_urls: list[str]):
+def make_pdf(all_results: list[list], js_urls: list[str], main_url: str):
     """Generate a PDF report from test results."""
+    date = datetime.now().strftime("%Y-%m-%d")
+    file_name = f"{main_url.replace('https://','').replace('http://','').split('/', 1)[0]}_{date}.pdf"
     pdf = SimpleDocTemplate(
-        "output.pdf",
+        file_name,
         pagesize=A4,
         leftMargin=2 * cm,
         rightMargin=2 * cm,
@@ -105,3 +108,5 @@ def make_pdf(all_results: list[list], js_urls: list[str]):
         content.append(Spacer(1, 25))
 
     pdf.build(content)
+    print(f"\n[+] PDF saved to {file_name}")
+

@@ -1,10 +1,10 @@
 import asyncio
 
-from recon import scanner, downloader, parser, tester, reporter
+from recon import scanner, downloader, parser, tester, reporter, subdomain
 
 
 async def run(url: str, aggressive: bool = False, output: bool = False):
-    """Main orchestrator — every module returns here, main decides what's next."""
+    """Scan a single URL — discover JS, extract endpoints, test, report."""
 
     print(f"[*] Scanning {url}, this can take up to 60s")
 
@@ -43,7 +43,28 @@ async def run(url: str, aggressive: bool = False, output: bool = False):
 
     # Step 5: Report results
     if output:
-        reporter.make_pdf(all_results, js_urls)
-        print(f"\n[+] PDF saved to output.pdf")
+        reporter.make_pdf(all_results, js_urls, url)
     else:
         reporter.print_results(all_results)
+
+
+async def run_domain(domain: str, aggressive: bool = False, output: bool = False):
+    """Enumerate subdomains, then scan each one immediately with output per domain."""
+
+    print(f"[*] Finding subdomains for {domain}...")
+    subdomains = subdomain.find_subdomains(domain)
+
+    if not subdomains:
+        print("[!] No subdomains found.")
+        return
+
+    print(f"[+] Found {len(subdomains)} subdomain(s)\n")
+
+    for i, sub in enumerate(subdomains, 1):
+        url = f"https://{sub}"
+
+        print(f"\n{'='*60}")
+        print(f"[{i}/{len(subdomains)}] {url}")
+        print(f"{'='*60}")
+
+        await run(url, aggressive, output)
