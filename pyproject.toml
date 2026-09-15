@@ -12,6 +12,7 @@ dependencies = [
     "playwright",
     "tree-sitter>=0.26.0",
     "tree-sitter-javascript>=0.25.0",
+    "reportlab>=5.0.1",
 ]
 
 [project.scripts]

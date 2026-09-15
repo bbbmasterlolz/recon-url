@@ -11,7 +11,7 @@ tools = [
 ]
 
 def check_tool(name):
-    if tools_dir:
+    if tools_dir.exists:
         return (tools_dir / f"{name}.exe").exists()
     else:
         return False
