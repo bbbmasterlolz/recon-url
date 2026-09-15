@@ -8,7 +8,10 @@ arch = platform.machine()
 
 
 def install(dest):
-    machine = f"{system}_{arch}".lower()
+    if system == "Darwin":
+        machine = f"macOS_{arch}".lower()
+    else:
+        machine = f"{system}_{arch}".lower()
 
     url = (f"https://github.com/projectdiscovery/subfinder/releases/download/v2.15.0/subfinder_2.15.0_{machine}.zip")
 
